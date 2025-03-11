@@ -98,6 +98,29 @@ void test_multiply_underflow(void) {
   TEST_ASSERT_TRUE(result > 0); // This checks if underflow occurred
 }
 
+// Division tests
+void test_divide_positive_numbers(void) {
+  TEST_ASSERT_EQUAL(3, divide(3, 1)); // expect 3 / 1 = 3
+}
+
+void test_divide_positive_and_negative_numbers(void) {
+  TEST_ASSERT_EQUAL(-2, divide(6, -3)); // expect 6 / -3 = -2
+}
+
+void test_divide_negative_numbers(void) {
+  TEST_ASSERT_EQUAL(8, divide(-16, -2)); // expect -16 / -2 = 8
+}
+
+void test_divide_zero(void) {
+  TEST_ASSERT_EQUAL(0, divide(10, 0)); // expect 10 / 0 = 0
+  TEST_ASSERT_EQUAL(0, divide(0, 0));  // expect 0 / 0 = 0
+}
+
+void test_divide_overflow(void) {
+  int result = divide(INT_MIN, -1); // Should wrap around or cause undefined behavior
+  TEST_ASSERT_TRUE(result < 0); // This checks if overflow occurred
+}
+
 int main(void) {
   UNITY_BEGIN();
 
@@ -121,6 +144,12 @@ int main(void) {
   RUN_TEST(test_multiply_zero);
   RUN_TEST(test_multiply_overflow);
   RUN_TEST(test_multiply_underflow);
+
+  RUN_TEST(test_divide_positive_numbers);
+  RUN_TEST(test_divide_positive_and_negative_numbers);
+  RUN_TEST(test_divide_negative_numbers);
+  RUN_TEST(test_divide_zero);
+  RUN_TEST(test_divide_overflow);
 
   return UNITY_END();
 }
