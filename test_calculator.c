@@ -70,6 +70,34 @@ void test_subtract_underflow(void) {
   TEST_ASSERT_TRUE(result > 0); // This checks if underflow occurred
 }
 
+// Multiplication tests
+void test_multiply_positive_numbers(void) {
+  TEST_ASSERT_EQUAL(6, multiply(2, 3)); // expect 2 * 3 = 6
+}
+
+void test_multiply_positive_and_negative_numbers(void) {
+  TEST_ASSERT_EQUAL(-20, multiply(5, -4)); // expect 5 * -4 = -20
+}
+
+void test_multiply_negative_numbers(void) {
+  TEST_ASSERT_EQUAL(12, multiply(-3, -4)); // expect -3 * -4 = 12
+}
+
+void test_multiply_zero(void) {
+  TEST_ASSERT_EQUAL(0, multiply(0, 0)); // expect 10 * 0 = 0
+  TEST_ASSERT_EQUAL(0, multiply(0, 0)); // expect 0 * 0 = 0
+}
+
+void test_multiply_overflow(void) {
+  int result = multiply(INT_MAX - 5, 2); // Should wrap around or cause undefined behavior
+  TEST_ASSERT_TRUE(result < 0); // This checks if overflow occurred
+}
+
+void test_multiply_underflow(void) {
+  int result = multiply(INT_MIN + 5, 2);
+  TEST_ASSERT_TRUE(result > 0); // This checks if underflow occurred
+}
+
 int main(void) {
   UNITY_BEGIN();
 
@@ -86,6 +114,13 @@ int main(void) {
   RUN_TEST(test_subtract_zero);
   RUN_TEST(test_subtract_overflow);
   RUN_TEST(test_subtract_underflow);
+
+  RUN_TEST(test_multiply_positive_numbers);
+  RUN_TEST(test_multiply_positive_and_negative_numbers);
+  RUN_TEST(test_multiply_negative_numbers);
+  RUN_TEST(test_multiply_zero);
+  RUN_TEST(test_multiply_overflow);
+  RUN_TEST(test_multiply_underflow);
 
   return UNITY_END();
 }
